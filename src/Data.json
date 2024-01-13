@@ -1,0 +1,16 @@
+ {
+  "elements": [
+    { "name": "element1", "value": "value1" },
+    { "type": "function", "name": "设置公式" }
+  ],
+  "baseElements": [
+    { "type": "text", "name": "文本",  "value": "这是文本"},
+    { "type": "textInput", "name": "输入文本",  "placeholder": "输入文本"},
+    { "type": "numberInput", "name": "输入数字", "placeholder": "输入数字"},
+    { "type": "select", "name": "选择", "opts": "1 2 3" },
+    { "type": "switch", "name": "开关",  "value": false },
+    { "type": "pressureSwitch", "name": "压力开关",  "value": false },
+    { "type": "idSelect", "name": "外键选择",  "value": "选择外键" } 
+  ],
+  "schemas":["id", "name", "value", "opts", "placeholder", "tableName", "show", "other"]
+}

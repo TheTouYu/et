@@ -1,0 +1,496 @@
+* {
+    margin:0;
+    padding:0;
+}
+:root {
+    --blur-level: 0.4px;
+    --font-size: 30px;
+    --hover-colorInhance: 0.8;
+    --green:rgb(131, 175, 131);
+    --grey: rgb(146, 149, 146);
+    --blue: #4753a2ec;
+    --light-grey: rgb(146, 149, 146, 0.1);
+    --red: rgb(237, 98, 74);
+    --white: rgb(219, 215, 214);
+    --padding: calc(0.2*var(--font-size));
+}
+
+
+
+#Preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap:10px;
+    justify-content: center;
+    background: linear-gradient(60deg, rgba(0,0,0,0.1), 30%,rgba(0, 255, 0,0.1), rgba(240, 248, 255, 0.366));
+    background-repeat: repeat-x;
+}
+
+body {
+    /* background-image: url('../public/grey.jpg'); */
+    /* background: linear-gradient(45deg, rgba(58, 57, 57, 0.078) 40%,rgba(120, 123, 137, 0.161) 40%, rgba(214, 217, 220, 0.468) 40%); */
+    /* background-repeat: repeat-x; */
+    background: linear-gradient(60deg, rgba(0, 0, 0, 0.1)  30%, rgba(0, 255, 0, 0.059), rgba(85, 102, 117, 0.1));
+    background-repeat: repeat-x;
+    background-size: cover;
+    /* background-size: 2000px; */
+    background-color: 3000vw;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-color: rgba(227, 222, 222, 0.971); */
+}
+
+#App {
+    display: flex;
+    flex-flow: row nowrap; 
+    min-height: 100vh;
+    &  :where(#LeftSide, #Main) {
+        border:3px dashed var(--light-grey);
+        min-height: 100vh;
+        box-sizing: border-box;
+        width: fit-content;
+
+        &[id=Main]{
+            /* display: flex;
+            flex-flow: row wrap;
+            align-items: flex-start;
+            align-content: flex-start;
+            gap:4px;
+            max-width: 400px; */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+            grid-gap: 10px;
+            grid-row-start: 2;
+            max-width: 100vw;
+            /* width: fit-content; */
+            align-items: flex-start;
+            align-content: flex-start;
+            
+            .doubleWidth {
+                    grid-column: span 2;
+            
+                    &> :nth-child(n) {
+                        width: max-content;
+                        min-width: calc(5.6*var(--font-size));
+                        max-width: calc(11.4*var(--font-size));
+                    }
+            
+                    /* 想办法占两列，往网格布局的方向走 */
+                }
+            .maxWidth.Element {
+                    /* place-self: center; */
+                    grid-column: 1 / -1 ;
+            
+                    &> :nth-child(n) {
+                        width: max-content;
+                        min-width: calc(5.6*var(--font-size));
+                        /* max-width: calc(17.4*var(--font-size)); */
+                        max-width: 80vw;
+                    }
+            
+                    /* 想办法占两列，往网格布局的方向走 */
+                }
+            /* .left.Element {
+                place-self: start; 
+            }
+            .right.Element {
+                grid-column: 1 / -1 ;
+                color: green;
+                place-self: end;
+            }
+            .center.Element {
+                place-self: center;
+            } */
+        }
+        &[id=Main]::before {
+            content: '----------> 编程愉快！<-----------';
+            min-width: 399px;
+            color: var(--green);
+        }
+    }
+        /* 顶部栏 */
+    & #TopSide {
+        position: absolute;
+        /* left:15%; */
+        /* border-radius: 2px; */
+        /* transform: translateX(50%); */
+        top:0;
+        left: 0;
+        opacity: 0;
+        display:flex;
+        background: var(--white);
+        height: 40px;
+        /* width: max-content; */
+        min-width: 100vw;
+        justify-content: center;
+        align-items: center;
+        transition: all 1s ease-in;
+        &:where(:hover, :focus-within) {
+            z-index: 10;
+            opacity: 0.99;
+        }
+
+        & :nth-child(n) {
+            appearance: none;
+            border: 1px solid var(--grey);
+            border-radius: 3px;
+            color: var(--grey);
+            font-size: large;
+            margin: 0 10px;
+            &:hover {
+                color: var(--green);
+            }
+        }
+    
+    }
+}
+
+.Element {
+    font-size: var(--font-size);
+    color: var(--grey);
+    display: flex;
+    align-items: center;
+    /* max-width: fit-content; */
+    border: 2px solid rgba(100, 100, 100, .2);
+    border-radius: 3px;
+    margin: 1px;
+    gap: 3px;
+    transition: all 0.8s ease-out 0.1;
+    padding: 3px 6px;
+    width: fit-content;
+    /* 下面负责控制动态美化 */
+    &> :nth-child(n) {
+        margin: inherit;
+        padding: 3px 6px;
+        /* min-width: 60px; */
+        /* min-width: 70px; */
+        min-width: calc(2.8*var(--font-size));
+        max-width: calc(5.7*var(--font-size));
+        &:where(input,select) {
+            width: calc(3.8*var(--font-size));
+        }
+        /* white-space: pre-wrap; */
+        /* overflow: hidden; */
+        /* max-width: 260px; */
+        border: inherit;
+        border-radius: inherit;
+        filter: blur(var(--blur-level));
+        transition: all 0.7s ease ;
+
+        /*经过变大，营造立体感 */
+        &:hover:not([id*='switch']) {
+            /* border: 2.5px solid rgba(255, 255, 255, .7); */
+            padding: 1px 0px;
+            transition: all 0.6s ease-in 0.2;
+        }
+    }
+
+    &:where(:hover, :focus-within, :active) {
+        transition: all 0.5s ease-in-out 0.2;
+        /* padding: 3px; */
+        background-color: rgb(240, 248, 255, var(--hover-colorInhance));
+
+        /* 下面这么写的原因是label关联了，要单独触发，只有加上左右孩子的条件 */
+        & :first-child:hover {
+            filter: blur(0);
+        }
+        & :last-child:hover {
+            filter: blur(0);
+        } 
+
+        & :last-child:where(:focus-within, :active) {
+            /* 这里单独写，为了focus时保持触发。单独保证对象时右孩子不是左孩子 */
+            filter: blur(0);
+            font-size: calc(0.8*var(--font-size));
+        }
+    }
+
+
+    &>.scrollingBox {
+        filter: blur(0);
+        /* 不是通过输入框和css实现的，无法使用focus */
+    }
+}
+/* js实现的switch开关，实在受不了了，css纯实现，启动 */
+.Element label[for*='switch'] {
+    /* 给本体添加移动动画 */
+    transition: all 0.5s ease 0.5s;
+    &:has(+div>input:checked) {
+        color: var(--green);
+        /* &:not(:hover){ */
+            /* padding-inline: 30px; */
+    }
+
+    +div[id*='switch'] {
+        /* &:not(:hover) { */
+        border: calc(0.07*var(--font-size)) solid var(--grey);
+        opacity: var(--hover-colorInhance);
+        /* } */
+        background-color: grey;
+        width: calc(2.4*var(--font-size));
+        height: calc(1.2*var(--font-size));
+        border-radius: calc(1.4*var(--font-size));
+        display: flex;
+        align-items: center;
+       
+        & > input {
+            appearance: none;
+            background: var(--white);
+            width: calc(1.5*var(--font-size));
+            height: calc(1.3*var(--font-size));
+            border-radius: calc(1.3*var(--font-size));
+            border: calc(0.05*var(--font-size)) solid var(--grey);
+            outline: none;
+            transition: all 0.5s ease 0.5s;
+            transform: translateX(calc(-0.2*var(--font-size)));
+            &:checked {
+                transform: translateX(calc(1.2*var(--font-size)));
+                background: var(--red);
+            }
+        }
+    }
+}
+
+/* 纯css实现炫酷的压力开关，并且渲染到文字上。比用js加css的实现(switch组件)好多了！ */
+.Element label[for*='pressureSwitch'] {
+    /* 给本体添加移动动画 */
+    transition: all 0.5s ease 0.5s;
+    &:has(+input[id*='pressureSwitch']:checked) {
+        color: var(--green);
+        &:not(:hover){ 
+            padding-inline: 30px;
+            margin-inline: 30px;
+            transition: all 0.5s ease 0.5s;
+        }
+    }
+
+    +input[id*='pressureSwitch'] {
+        appearance: none;
+        color: var(--grey);
+        outline: none;
+        cursor: pointer;
+        border: calc(0.07*var(--font-size)) solid rgba(0, 0, 0, 0.01);
+        border-radius: 10%;
+        height: calc(3*var(--font-size));
+        width: calc(3*var(--font-size));
+        font-size: calc(1.5*var(--font-size));
+        transition: box-shadow 1.5s ease-out 0.0s;
+        box-shadow:
+            0px 0px 1px 1px rgb(240, 248, 255, 0.1),
+            0px 0px 1px 1px rgba(0, 0, 0, 0.1),
+            inset -0px -0px 1px .6px rgba(0, 0, 0, 0.1),
+            inset 0px -0px 0px .6px rgba(0, 0, 0, 0.1);
+
+        &:checked {
+            box-shadow:
+                0px 0px 1px 1px rgb(240, 248, 255, 0.1),
+                0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+
+                transition: all 1.5s ease-out 0.0s;
+            &::after {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                border-style: solid;
+                border-radius: 50%;
+                text-align: center;
+                content: "'.'";
+                height: calc(2.3*var(--font-size));
+                width: calc(2.3*var(--font-size));
+                color: var(--green);
+                transition: all 1.5s ease-out 0.0s;
+            }
+
+
+        }
+
+        &:not(:checked)::after {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            content: '';
+            border-style: solid;
+            border-radius: 50%;
+            text-align: center;
+            content: "•༝•";
+            height: calc(2*var(--font-size));
+            width: calc(2*var(--font-size));
+            transition: all 1.5s ease-out 0.0s;
+        }
+    }
+}
+
+.Element> div[id*='idSelect'] {
+    color: var(--blue);
+}
+
+/* 稍微调整option的样式，风格要统一 */
+.Element > select[id*='select'] {
+    appearance: none;
+    color:var(--grey);
+    outline-color: var(--grey);
+    & option {
+        color:var(--grey);
+    }
+}
+
+/* 数据校验提示 */
+.Element :where(input[id*='Input'], select[id*='select']){
+    font-size: calc(0.7*var(--font-size));
+    appearance: none;
+    border-radius: 3px;
+    line-height: 1.5;
+    text-align: center;
+    width: fit-content;
+    max-width:140px;
+    color: var(--grey);
+    caret-color: var(--grey);
+    outline-color: var(--grey);
+    transition: all .7s ease-in;
+    /* &:where(:hover,:focus-within) {
+        width:140px;
+        transform: translateX(-20px);
+    } */
+    &[id*='number']:invalid {
+        color:red;
+    }
+    &[id='tableNameInput']:invalid {
+        & + button {
+            display: none;
+        }
+    }
+}
+
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  box-sizing: border-box;
+  background-color: var(--light-grey);
+  color: var(--green);
+  padding: 15px;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.notification.show {
+  opacity: 1;
+}
+
+#Datas {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fill);
+    gap: 30px;
+    /* background: linear-gradient(60deg, rgba(0,0,0,0.1), 30%,rgba(0, 255, 0,0.1), rgba(240,248,255, 0.1));
+    background-repeat: repeat-x; */
+    & > .Element {
+        
+        display: flex;
+        flex-flow: column wrap;
+        height: 250px;
+        max-width: 400px;
+        overflow: hidden;
+        border-radius: 5px;
+        border-width: 3px;
+        box-sizing: border-box;
+        & label {
+            opacity: 0;
+        }
+        & :nth-child(n) {
+            &[id*='card'] {
+                font-size: 65px;
+                font-size: calc(2.0*var(--font-size));
+               
+            }
+           
+            font-size: var(--font-size);
+            appearance: none;
+            outline-color: none;
+            color: var(--grey);
+            filter:blur(calc(2*var(--blur-level)));
+            overflow: hidden;
+            max-width: 290px;
+        }
+        &:hover {
+            :nth-child(n){
+                filter: blur(0);
+                color: var(--green);
+            }
+            div {
+                max-width: 80px;
+                /* font-size: calc(1.0*var(--font-size)); */
+            }
+            label {
+                opacity: 1;
+                padding: 1px 2px;
+                margin: 2px;
+                display: flex;
+                /* font-size: 34px;
+                font-size: calc(1.0*var(--font-size)); */
+            }
+        }
+    }
+}
+#Datas  div {
+    &:hover {
+        #card1, div  {  
+            /* 权重太低导致的 */
+            /* color: red; */
+            font-size: var(--font-size) !important;
+        }
+    }
+}
+@media only screen and (max-width: 800px) {
+    body {
+        background-size: 300vw;
+    }
+    #Main {
+        min-width: 100vw;
+    }
+    .Element > :nth-child(n) {
+        min-width: calc(2.4*var(--font-size));
+        /* min-width: 80px; */
+    }
+    #Datas {
+        grid-template-columns: 1fr;
+        & > .Element > label {
+            display: flex;
+            opacity: 1;
+            padding: 1px 2px;
+            margin: 2px;
+            display: flex;
+        }
+        #card1,
+         div > div {
+            font-size: var(--font-size) !important;
+            /* color:red; */
+        }
+    };
+}
+
+#globalInput {
+    position: fixed;
+    left: -200px;
+    height: 50px;
+    width: 200px;
+    outline-color: var(--grey);
+    color: var(--green);
+    border: 2px solid var(--light-grey);
+    border-radius: 30px;
+    text-align: center;
+    opacity: 0.1;
+    transition: all 0.4s ease-in-out;
+    &:focus-within{
+        opacity: 1;
+        padding: 10px 50px;
+        margin: 30px;
+        font-size: 60px;
+    }
+}

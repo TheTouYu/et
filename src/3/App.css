@@ -1,0 +1,90 @@
+:root {
+  --box-font-size: auto;
+  --text-width: auto;
+
+  --box-border-width: 2px;
+  --box-border-radius: 1vw;
+
+  --max-box-width: 20vw;
+  --main-border: 0.2vh;
+  --main-height: 99.6vh;
+  --main-gap: 3vw;
+  --max-main-width: calc( 2*var(--max-box-width) );
+}
+
+.App {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  text-align: center;
+  vertical-align: middle;
+
+  background-color: #FFFFFF;
+  background-image: url('../public/grey.jpg');
+  font-size: var(--box-font-size);
+
+  border-style: ridge;
+  border-width: var(--main-border);
+}
+
+.Side {
+  display:flex;
+  flex-flow:row wrap;
+  align-content: flex-start;
+  max-width:calc(1.3*var(--max-box-width));
+  flex: 1;
+
+  border-width: var(--main-border);
+  border-style: outset;
+
+  min-height: var(--main-height);
+}
+
+.Main {
+  display: flex;
+  flex-flow:row wrap;
+  justify-content: center;
+  align-content: flex-start;
+  flex:2.5;
+
+  max-width: var(--max-main-width);
+
+  min-height: var(--main-height);
+  gap: var(--main-gap);
+  border-style: outset;
+  border-width: var(--main-border);
+}
+.Main > div {
+  display:flex;
+  flex-flow:row nowrap;
+  align-items: center;
+  justify-content: center;
+
+  max-width: var(--max-mainBox-width);
+  width: var(--mainBox-width);
+  margin: var(--mainBox-margin);
+}
+
+.MenuEntrance {
+  position: fixed;
+  left: 10%;
+  top: 80%;
+  height: 10vh;
+  width: 10vh;
+  border-radius: 4.6vh;
+  border-style:outset;
+  text-align: center;
+  background:rgb(000, 000, 000, 0.1);
+}
+.MenuEntrance :first-child {
+  position: absolute;
+  left:0vh;
+  top:2vh;
+  height: 10vh;
+  width: 10vh;
+  border-radius: 4vh;
+  color:rgb(255, 255, 255, .7);
+  font-size: 4vh;
+}
